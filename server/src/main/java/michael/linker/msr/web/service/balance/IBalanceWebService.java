@@ -31,12 +31,13 @@ public interface IBalanceWebService {
     GetBalanceResponse getBalance(Long balanceId) throws BalanceServiceNotFoundException;
 
     /**
-     * Update a balance according to the specified request model.
+     * Update specified balance according to the specified request model.
      *
+     * @param balanceId ID of the balance.
      * @param request new balance amount.
      * @throws BalanceServiceNotFoundException if balance with provided ID was not found.
      */
-    void updateBalance(UpdateBalanceRequest request) throws BalanceServiceNotFoundException;
+    void updateBalance(Long balanceId, UpdateBalanceRequest request) throws BalanceServiceNotFoundException;
 
     /**
      * Remove all balances.

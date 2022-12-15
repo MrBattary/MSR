@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import michael.linker.msr.web.model.api.request.CreateBalanceRequest;
 import michael.linker.msr.web.model.api.request.UpdateBalanceRequest;
 import michael.linker.msr.web.model.api.response.GetBalanceResponse;
+import michael.linker.msr.web.service.balance.IBalanceWebService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,10 +26,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(path = "${controller.balance.path}")
 public class BalanceController {
+    private final IBalanceWebService service;
+
+    public BalanceController(IBalanceWebService service) {
+        this.service = service;
+    }
 
     @PutMapping
     public ResponseEntity<?> createBalance(@RequestBody CreateBalanceRequest request) {
-        // TODO (ML): Provide service logic
+        service.createBalance(request);
         return ResponseEntity
                 .ok()
                 .build();
@@ -37,8 +43,7 @@ public class BalanceController {
     @GetMapping(value = "/{balanceId}")
     @ResponseBody
     public ResponseEntity<GetBalanceResponse> getBalance(@PathVariable String balanceId) {
-        // TODO (ML): Provide service logic
-        final GetBalanceResponse response = new GetBalanceResponse();
+        final GetBalanceResponse response = service.getBalance(Long.valueOf(balanceId));
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -48,7 +53,7 @@ public class BalanceController {
     @PostMapping(value = "/{balanceId}")
     public ResponseEntity<?> updateBalance(@PathVariable String balanceId,
                                            @RequestBody UpdateBalanceRequest request) {
-        // TODO (ML): Provide service logic
+        service.updateBalance(Long.valueOf(balanceId), request);
         return ResponseEntity
                 .ok()
                 .build();
@@ -56,7 +61,7 @@ public class BalanceController {
 
     @DeleteMapping
     public ResponseEntity<?> removeAllBalances() {
-        // TODO (ML): Provide service logic
+        service.removeAllBalances();
         return ResponseEntity
                 .ok()
                 .build();
