@@ -10,3 +10,8 @@ controller:
         default: "Internal server error."
   balance:
     path: "/balance"
+
+text:
+  exception:
+    balanceNotFound: "The balance with ID %1$s was not found."
+    balanceExists: "The balance with ID %1$s already exists."

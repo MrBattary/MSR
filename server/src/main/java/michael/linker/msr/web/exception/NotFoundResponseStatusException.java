@@ -8,4 +8,8 @@ public class NotFoundResponseStatusException extends ResponseStatusException {
     public NotFoundResponseStatusException() {
         super(EXCEPTION_STATUS);
     }
+
+    public NotFoundResponseStatusException(String message) {
+        super(message, EXCEPTION_STATUS);
+    }
 }

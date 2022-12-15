@@ -8,4 +8,8 @@ public class BadRequestResponseStatusException extends ResponseStatusException {
     public BadRequestResponseStatusException() {
         super(EXCEPTION_STATUS);
     }
+
+    public BadRequestResponseStatusException(String message) {
+        super(message, EXCEPTION_STATUS);
+    }
 }
