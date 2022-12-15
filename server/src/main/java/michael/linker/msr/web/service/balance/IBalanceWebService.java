@@ -1,15 +1,16 @@
 package michael.linker.msr.web.service.balance;
 
+import michael.linker.msr.core.service.balance.IBalanceCoreService;
 import michael.linker.msr.web.model.api.request.CreateBalanceRequest;
 import michael.linker.msr.web.model.api.request.UpdateBalanceRequest;
 import michael.linker.msr.web.model.api.response.GetBalanceResponse;
 
 /**
  * General interface for the web balance service implementation.
- * Used by BalanceController, uses BalanceCoreService.
+ * Used by BalanceController, uses IBalanceCoreService impl.
  *
  * @see michael.linker.msr.web.controller.BalanceController
- * @see michael.linker.msr.core.service.IBalanceCoreService
+ * @see IBalanceCoreService
  */
 public interface IBalanceWebService {
     /**
