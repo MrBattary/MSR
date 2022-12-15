@@ -2,5 +2,11 @@ server:
   port: 8080
 
 controller:
+  advice:
+    response:
+      provideMessage: true
+      message:
+        placeholder: ""
+        default: "Internal server error."
   balance:
     path: "/balance"
