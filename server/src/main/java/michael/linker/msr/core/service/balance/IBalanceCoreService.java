@@ -17,9 +17,9 @@ public interface IBalanceCoreService {
      * Checks if the balance exists, and if it does not exist, adds the balance to the repository.
      *
      * @param model balance model.
-     * @return true if successfully added, false otherwise.
+     * @throws BalanceCoreServiceFailedException if the balance creation failed.
      */
-    boolean createBalance(BalanceModel model);
+    void createBalance(BalanceModel model) throws BalanceCoreServiceFailedException;
 
     /**
      * Getting a balance.
@@ -34,8 +34,9 @@ public interface IBalanceCoreService {
      *
      * @param id     bank account ID.
      * @param amount the amount of money to be added to the bank account.
+     * @throws BalanceCoreServiceFailedException if the was not found.
      */
-    void changeBalance(Long id, Long amount);
+    void changeBalance(Long id, Long amount) throws BalanceCoreServiceFailedException;
 
     /**
      * Remove all balances.
