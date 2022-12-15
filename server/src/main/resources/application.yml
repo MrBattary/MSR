@@ -1,0 +1,6 @@
+server:
+  port: 8080
+
+controller:
+  balance:
+    path: "/balance"
