@@ -21,3 +21,4 @@ text:
   exception:
     balanceNotFound: "The balance with ID %1$s was not found."
     balanceExists: "The balance with ID %1$s already exists."
+    balanceIdNull: "The provided ID is null."

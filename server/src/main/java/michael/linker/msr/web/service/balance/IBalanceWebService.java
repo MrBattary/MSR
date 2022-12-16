@@ -17,27 +17,33 @@ public interface IBalanceWebService {
      * Create a balance according to the specified request model.
      *
      * @param request contains ID and amount balance data.
+     * @throws BalanceServiceBadDataException       if balance ID is null.
      * @throws BalanceServiceAlreadyExistsException if balance with provided ID already exists.
      */
-    void createBalance(CreateBalanceRequest request) throws BalanceServiceAlreadyExistsException;
+    void createBalance(CreateBalanceRequest request)
+            throws BalanceServiceBadDataException, BalanceServiceAlreadyExistsException;
 
     /**
      * Get the balance model by the specified balance ID.
      *
      * @param balanceId ID of the balance.
      * @return a model containing data about the amount on the balance.
+     * @throws BalanceServiceBadDataException  if balance ID is null.
      * @throws BalanceServiceNotFoundException if balance with provided ID was not found.
      */
-    GetBalanceResponse getBalance(Long balanceId) throws BalanceServiceNotFoundException;
+    GetBalanceResponse getBalance(Long balanceId)
+            throws BalanceServiceBadDataException, BalanceServiceAlreadyExistsException;
 
     /**
      * Update specified balance according to the specified request model.
      *
      * @param balanceId ID of the balance.
-     * @param request new balance amount.
+     * @param request   new balance amount.
+     * @throws BalanceServiceBadDataException  if balance ID is null.
      * @throws BalanceServiceNotFoundException if balance with provided ID was not found.
      */
-    void updateBalance(Long balanceId, UpdateBalanceRequest request) throws BalanceServiceNotFoundException;
+    void updateBalance(Long balanceId, UpdateBalanceRequest request)
+            throws BalanceServiceBadDataException, BalanceServiceAlreadyExistsException;
 
     /**
      * Remove all balances.
