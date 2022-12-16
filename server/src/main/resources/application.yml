@@ -1,24 +1,40 @@
+#Defailt application port
 server:
   port: 8080
 
+# Spring settings
 spring:
+  # PostgreSQL
   datasource:
     url: 'jdbc:postgresql://localhost:5432/linkermsrdb'
     username: 'linkermsru'
     password: 'linkermsr'
+  # JPA
   jpa:
     open-in-view: false
+  # Logger
+  profiles:
+    active: 'development'
 
+# Logger config
+logging:
+  file:
+    path: 'logs'
+
+# Custom controller properties
 controller:
+  # Main controller advice properties
   advice:
     response:
       provideMessage: true
       message:
         placeholder: ""
         default: "Internal server error."
+  # Balance controller properties
   balance:
     path: "/balance"
 
+# Custom exception texts
 text:
   exception:
     balanceNotFound: "The balance with ID %1$s was not found."
