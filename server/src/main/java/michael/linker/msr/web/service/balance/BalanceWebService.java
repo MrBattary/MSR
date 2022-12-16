@@ -20,7 +20,7 @@ public class BalanceWebService implements IBalanceWebService {
         try {
             coreService.createBalance(new BalanceModel(request));
         } catch (BalanceCoreServiceFailedException e) {
-            throw new BalanceServiceAlreadyExistsException(request.getId());
+            throw new BalanceServiceAlreadyExistsException(request.id());
         }
     }
 
@@ -37,7 +37,7 @@ public class BalanceWebService implements IBalanceWebService {
     @Override
     public void updateBalance(Long balanceId, UpdateBalanceRequest request) throws BalanceServiceNotFoundException {
         try {
-            coreService.changeBalance(balanceId, request.getAmount());
+            coreService.changeBalance(balanceId, request.amount());
         } catch (BalanceCoreServiceFailedException e) {
             throw new BalanceServiceNotFoundException(balanceId);
         }
