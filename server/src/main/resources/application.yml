@@ -6,6 +6,8 @@ spring:
     url: 'jdbc:postgresql://localhost:5432/linkermsrdb'
     username: 'linkermsru'
     password: 'linkermsr'
+  jpa:
+    open-in-view: false
 
 controller:
   advice:

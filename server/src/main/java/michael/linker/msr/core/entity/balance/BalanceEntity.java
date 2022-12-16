@@ -19,7 +19,6 @@ import java.io.Serializable;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class BalanceEntity {
     @Id
     @Column(name = "id")
