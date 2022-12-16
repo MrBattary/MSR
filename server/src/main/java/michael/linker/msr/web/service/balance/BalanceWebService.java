@@ -12,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class BalanceWebService implements IBalanceWebService {
-    // TODO (ML): Provide constructor for the field
-    private IBalanceCoreService coreService;
+    private final IBalanceCoreService coreService;
+
+    public BalanceWebService(IBalanceCoreService coreService) {
+        this.coreService = coreService;
+    }
 
     @Override
     public void createBalance(CreateBalanceRequest request) throws BalanceServiceAlreadyExistsException {

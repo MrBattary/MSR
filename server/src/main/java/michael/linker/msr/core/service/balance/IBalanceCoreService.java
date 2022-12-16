@@ -8,8 +8,10 @@ import java.util.Optional;
  * General interface for the core balance service implementation.
  * Is an extended interface from the task, method contracts from the task are saved.
  * Used by IBalanceWebService impl.
+ * Uses BalanceRepository.
  *
  * @see michael.linker.msr.web.service.balance.IBalanceWebService
+ * @see michael.linker.msr.core.repository.balance.BalanceRepository
  */
 public interface IBalanceCoreService {
 
