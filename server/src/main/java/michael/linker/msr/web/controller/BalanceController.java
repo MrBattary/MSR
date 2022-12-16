@@ -43,7 +43,7 @@ public class BalanceController {
     @GetMapping(value = "/{balanceId}")
     @ResponseBody
     public ResponseEntity<GetBalanceResponse> getBalance(@PathVariable String balanceId) {
-        final GetBalanceResponse response = service.getBalance(Long.valueOf(balanceId));
+        final GetBalanceResponse response = service.getBalance(Long.parseLong(balanceId));
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -53,7 +53,7 @@ public class BalanceController {
     @PostMapping(value = "/{balanceId}")
     public ResponseEntity<?> updateBalance(@PathVariable String balanceId,
                                            @RequestBody UpdateBalanceRequest request) {
-        service.updateBalance(Long.valueOf(balanceId), request);
+        service.updateBalance(Long.parseLong(balanceId), request);
         return ResponseEntity
                 .ok()
                 .build();

@@ -15,6 +15,9 @@ spring:
   # Logger
   profiles:
     active: 'development'
+  cache:
+    couchbase:
+      expiration: 60000
 
 # Logger config
 logging:
@@ -33,10 +36,3 @@ controller:
   # Balance controller properties
   balance:
     path: "/balance"
-
-# Custom exception texts
-text:
-  exception:
-    balanceNotFound: "The balance with ID %1$s was not found."
-    balanceExists: "The balance with ID %1$s already exists."
-    balanceIdNull: "The provided ID is null."

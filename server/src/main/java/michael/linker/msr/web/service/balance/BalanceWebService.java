@@ -21,9 +21,9 @@ public class BalanceWebService implements IBalanceWebService {
 
     @Override
     public void createBalance(CreateBalanceRequest request)
-            throws BalanceServiceBadDataException, BalanceServiceAlreadyExistsException {
+            throws BalanceServiceNullIdException, BalanceServiceAlreadyExistsException {
         if (!BalanceValidation.isIdValid(request.id())) {
-            throw new BalanceServiceBadDataException();
+            throw new BalanceServiceNullIdException();
         }
 
         try {
@@ -36,7 +36,7 @@ public class BalanceWebService implements IBalanceWebService {
     @Override
     public GetBalanceResponse getBalance(Long balanceId) throws BalanceServiceNotFoundException {
         if (!BalanceValidation.isIdValid(balanceId)) {
-            throw new BalanceServiceBadDataException();
+            throw new BalanceServiceNullIdException();
         }
 
         Optional<Long> amount = coreService.getBalance(balanceId);
@@ -50,7 +50,7 @@ public class BalanceWebService implements IBalanceWebService {
     @Override
     public void updateBalance(Long balanceId, UpdateBalanceRequest request) throws BalanceServiceNotFoundException {
         if (!BalanceValidation.isIdValid(balanceId)) {
-            throw new BalanceServiceBadDataException();
+            throw new BalanceServiceNullIdException();
         }
 
         if (BalanceValidation.isAmountValid(request.amount())) {

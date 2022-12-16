@@ -1,14 +1,12 @@
 package michael.linker.msr.web.service.balance;
 
 import michael.linker.msr.web.exception.BadRequestResponseStatusException;
-import org.springframework.beans.factory.annotation.Value;
 
 public class BalanceServiceAlreadyExistsException extends BadRequestResponseStatusException {
-    @Value("${text.exception.balanceExists}")
-    private String msg;
+    private static final String MSG = "The balance with ID %1$s already exists.";
 
     public BalanceServiceAlreadyExistsException(Long balanceId) {
         super();
-        this.setMessage(String.format(msg, balanceId));
+        this.setMessage(String.format(MSG, balanceId));
     }
 }

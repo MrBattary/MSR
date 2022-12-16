@@ -1,14 +1,12 @@
 package michael.linker.msr.web.service.balance;
 
 import michael.linker.msr.web.exception.NotFoundResponseStatusException;
-import org.springframework.beans.factory.annotation.Value;
 
 public class BalanceServiceNotFoundException extends NotFoundResponseStatusException {
-    @Value("${text.exception.balanceNotFound}")
-    private String msg;
+    private static final String MSG = "The balance with ID %1$s was not found.";
 
     public BalanceServiceNotFoundException(Long balanceId) {
         super();
-        this.setMessage(String.format(msg, balanceId));
+        this.setMessage(String.format(MSG, balanceId));
     }
 }

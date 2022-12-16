@@ -5,13 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import michael.linker.msr.core.model.balance.BalanceModel;
-
-import java.io.Serializable;
 
 @Entity
 @Table(name = "balance")

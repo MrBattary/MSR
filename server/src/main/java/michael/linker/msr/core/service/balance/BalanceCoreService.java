@@ -20,6 +20,7 @@ public class BalanceCoreService implements IBalanceCoreService {
     }
 
     @Override
+    @CachePut(value = CACHE_KEY, key = "#model.id.longValue()")
     public void createBalance(BalanceModel model) throws BalanceCoreServiceFailedException {
         if (repository.countById(model.id()) == 0L) {
             repository.saveAndFlush(new BalanceEntity(model));
@@ -29,7 +30,7 @@ public class BalanceCoreService implements IBalanceCoreService {
     }
 
     @Override
-    @Cacheable(value = CACHE_KEY, key = "#id")
+    @Cacheable(value = CACHE_KEY, key = "#id.longValue()")
     public Optional<Long> getBalance(Long id) {
         BalanceEntity balance = repository.findById(id).orElse(null);
         if (balance != null) {
@@ -39,16 +40,16 @@ public class BalanceCoreService implements IBalanceCoreService {
     }
 
     @Override
-    @CachePut(value = CACHE_KEY, key = "#id")
+    @CacheEvict(value = CACHE_KEY, key = "#id.longValue()")
     public void changeBalance(Long id, Long amount) throws BalanceCoreServiceFailedException {
         BalanceEntity balance = repository.findById(id)
                 .orElseThrow(BalanceCoreServiceFailedException::new);
-        balance.setAmount(amount);
-        repository.save(balance);
+        balance.setAmount(balance.getAmount() + amount);
+        repository.saveAndFlush(balance);
     }
 
     @Override
-    @CacheEvict(value = CACHE_KEY)
+    @CacheEvict(value = CACHE_KEY, allEntries = true)
     public void removeAllBalances() {
         repository.deleteAllInBatch();
     }
