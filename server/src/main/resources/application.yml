@@ -15,6 +15,7 @@ spring:
   # Logger
   profiles:
     active: 'development'
+  # Caching
   cache:
     couchbase:
       expiration: 60000
@@ -36,3 +37,19 @@ controller:
   # Balance controller properties
   balance:
     path: "/balance"
+
+# Custom filter properties
+filter:
+  # Counter filter properties
+  counter:
+    pattern: ${controller.balance.path}, ${controller.balance.path}/
+    period:
+      min: 0
+      sec: 5
+      # Calculated value, do NOT set const value
+      calculatedMs: '#{${filter.counter.period.min} * 60000 + ${filter.counter.period.sec} * 1000}'
+    format:
+      value: "Balance requests: %1$s, Balance updates: %2$s, Total: %3$s"
+      time: "%1$s min %2$s sec."
+      # 1 - value, 2 - time
+      concat: "%1$s per %2$s"
