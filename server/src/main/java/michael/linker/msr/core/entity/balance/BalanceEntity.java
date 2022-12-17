@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import michael.linker.msr.core.model.balance.BalanceModel;
+import michael.linker.msr.web.model.balance.BalanceModel;
 
 @Entity
 @Table(name = "balance")

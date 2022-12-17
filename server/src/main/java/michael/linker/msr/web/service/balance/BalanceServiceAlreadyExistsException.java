@@ -6,7 +6,6 @@ public class BalanceServiceAlreadyExistsException extends BadRequestResponseStat
     private static final String MSG = "The balance with ID %1$s already exists.";
 
     public BalanceServiceAlreadyExistsException(Long balanceId) {
-        super();
-        this.setMessage(String.format(MSG, balanceId));
+        super(String.format(MSG, balanceId));
     }
 }

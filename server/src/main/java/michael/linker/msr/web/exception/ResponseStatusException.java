@@ -22,10 +22,6 @@ abstract class ResponseStatusException extends RuntimeException {
         return statusCode;
     }
 
-    public void setMessage(String msg) {
-        this.msg = msg;
-    }
-
     @Override
     public String getMessage() {
         return msg;

@@ -1,9 +1,9 @@
 package michael.linker.msr.web.service.balance;
 
 import michael.linker.msr.core.service.balance.IBalanceCoreService;
-import michael.linker.msr.web.model.api.request.CreateBalanceRequest;
-import michael.linker.msr.web.model.api.request.UpdateBalanceRequest;
 import michael.linker.msr.web.model.api.response.GetBalanceResponse;
+import michael.linker.msr.web.model.balance.BalanceModel;
+import michael.linker.msr.web.model.balance.BalanceUpdateModel;
 
 /**
  * General interface for the web balance service implementation.
@@ -17,33 +17,27 @@ public interface IBalanceWebService {
      * Create a balance according to the specified request model.
      *
      * @param request contains ID and amount balance data.
-     * @throws BalanceServiceNullIdException       if balance ID is null.
      * @throws BalanceServiceAlreadyExistsException if balance with provided ID already exists.
      */
-    void createBalance(CreateBalanceRequest request)
-            throws BalanceServiceNullIdException, BalanceServiceAlreadyExistsException;
+    void createBalance(BalanceModel request) throws BalanceServiceAlreadyExistsException;
 
     /**
      * Get the balance model by the specified balance ID.
      *
      * @param balanceId ID of the balance.
      * @return a model containing data about the amount on the balance.
-     * @throws BalanceServiceNullIdException  if balance ID is null.
      * @throws BalanceServiceNotFoundException if balance with provided ID was not found.
      */
-    GetBalanceResponse getBalance(Long balanceId)
-            throws BalanceServiceNullIdException, BalanceServiceAlreadyExistsException;
+    GetBalanceResponse getBalance(Long balanceId) throws BalanceServiceAlreadyExistsException;
 
     /**
      * Update specified balance according to the specified request model.
      *
      * @param balanceId ID of the balance.
-     * @param request   new balance amount.
-     * @throws BalanceServiceNullIdException  if balance ID is null.
+     * @param request   new balance model.
      * @throws BalanceServiceNotFoundException if balance with provided ID was not found.
      */
-    void updateBalance(Long balanceId, UpdateBalanceRequest request)
-            throws BalanceServiceNullIdException, BalanceServiceAlreadyExistsException;
+    void updateBalance(Long balanceId, BalanceUpdateModel request) throws BalanceServiceAlreadyExistsException;
 
     /**
      * Remove all balances.

@@ -1,7 +1,7 @@
 package michael.linker.msr.core.service.balance;
 
 import michael.linker.msr.core.entity.balance.BalanceEntity;
-import michael.linker.msr.core.model.balance.BalanceModel;
+import michael.linker.msr.web.model.balance.BalanceModel;
 import michael.linker.msr.core.repository.balance.BalanceRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -45,7 +45,7 @@ public class BalanceCoreService implements IBalanceCoreService {
         BalanceEntity balance = repository.findById(id)
                 .orElseThrow(BalanceCoreServiceFailedException::new);
         balance.setAmount(balance.getAmount() + amount);
-        repository.saveAndFlush(balance);
+        repository.save(balance);
     }
 
     @Override

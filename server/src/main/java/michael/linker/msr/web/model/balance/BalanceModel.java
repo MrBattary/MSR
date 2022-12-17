@@ -1,4 +1,4 @@
-package michael.linker.msr.core.model.balance;
+package michael.linker.msr.web.model.balance;
 
 import michael.linker.msr.web.model.api.request.CreateBalanceRequest;
 

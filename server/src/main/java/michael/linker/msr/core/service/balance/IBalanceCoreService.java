@@ -1,6 +1,6 @@
 package michael.linker.msr.core.service.balance;
 
-import michael.linker.msr.core.model.balance.BalanceModel;
+import michael.linker.msr.web.model.balance.BalanceModel;
 
 import java.util.Optional;
 

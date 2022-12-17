@@ -1,12 +1,11 @@
 package michael.linker.msr.web.service.balance;
 
-import michael.linker.msr.core.model.balance.BalanceModel;
+import michael.linker.msr.web.model.balance.BalanceModel;
 import michael.linker.msr.core.service.balance.BalanceCoreServiceFailedException;
 import michael.linker.msr.core.service.balance.IBalanceCoreService;
-import michael.linker.msr.web.model.api.request.CreateBalanceRequest;
-import michael.linker.msr.web.model.api.request.UpdateBalanceRequest;
 import michael.linker.msr.web.model.api.response.GetBalanceResponse;
-import michael.linker.msr.web.util.validation.BalanceValidation;
+import michael.linker.msr.web.model.balance.BalanceUpdateModel;
+import michael.linker.msr.web.util.validation.balance.BalanceValidation;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,14 +19,9 @@ public class BalanceWebService implements IBalanceWebService {
     }
 
     @Override
-    public void createBalance(CreateBalanceRequest request)
-            throws BalanceServiceNullIdException, BalanceServiceAlreadyExistsException {
-        if (!BalanceValidation.isIdValid(request.id())) {
-            throw new BalanceServiceNullIdException();
-        }
-
+    public void createBalance(BalanceModel request) throws BalanceServiceAlreadyExistsException {
         try {
-            coreService.createBalance(new BalanceModel(request));
+            coreService.createBalance(request);
         } catch (BalanceCoreServiceFailedException e) {
             throw new BalanceServiceAlreadyExistsException(request.id());
         }
@@ -35,10 +29,6 @@ public class BalanceWebService implements IBalanceWebService {
 
     @Override
     public GetBalanceResponse getBalance(Long balanceId) throws BalanceServiceNotFoundException {
-        if (!BalanceValidation.isIdValid(balanceId)) {
-            throw new BalanceServiceNullIdException();
-        }
-
         Optional<Long> amount = coreService.getBalance(balanceId);
         if (amount.isEmpty()) {
             throw new BalanceServiceNotFoundException(balanceId);
@@ -48,11 +38,7 @@ public class BalanceWebService implements IBalanceWebService {
     }
 
     @Override
-    public void updateBalance(Long balanceId, UpdateBalanceRequest request) throws BalanceServiceNotFoundException {
-        if (!BalanceValidation.isIdValid(balanceId)) {
-            throw new BalanceServiceNullIdException();
-        }
-
+    public void updateBalance(Long balanceId, BalanceUpdateModel request) throws BalanceServiceNotFoundException {
         if (BalanceValidation.isAmountValid(request.amount())) {
             try {
                 coreService.changeBalance(balanceId, request.amount());

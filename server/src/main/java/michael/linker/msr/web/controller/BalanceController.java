@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import michael.linker.msr.web.model.api.request.CreateBalanceRequest;
 import michael.linker.msr.web.model.api.request.UpdateBalanceRequest;
 import michael.linker.msr.web.model.api.response.GetBalanceResponse;
+import michael.linker.msr.web.model.balance.BalanceModel;
+import michael.linker.msr.web.model.balance.BalanceUpdateModel;
 import michael.linker.msr.web.service.balance.IBalanceWebService;
+import michael.linker.msr.web.util.parsing.LongParser;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,7 +37,10 @@ public class BalanceController {
 
     @PutMapping
     public ResponseEntity<?> createBalance(@RequestBody CreateBalanceRequest request) {
-        service.createBalance(request);
+        service.createBalance(new BalanceModel(
+                LongParser.value(request.id()),
+                LongParser.value(request.amount())
+        ));
         return ResponseEntity
                 .ok()
                 .build();
@@ -43,7 +49,7 @@ public class BalanceController {
     @GetMapping(value = "/{balanceId}")
     @ResponseBody
     public ResponseEntity<GetBalanceResponse> getBalance(@PathVariable String balanceId) {
-        final GetBalanceResponse response = service.getBalance(Long.parseLong(balanceId));
+        final GetBalanceResponse response = service.getBalance(LongParser.valueOf(balanceId));
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -53,7 +59,8 @@ public class BalanceController {
     @PostMapping(value = "/{balanceId}")
     public ResponseEntity<?> updateBalance(@PathVariable String balanceId,
                                            @RequestBody UpdateBalanceRequest request) {
-        service.updateBalance(Long.parseLong(balanceId), request);
+        service.updateBalance(LongParser.valueOf(balanceId),
+                new BalanceUpdateModel(LongParser.value(request.amount())));
         return ResponseEntity
                 .ok()
                 .build();

@@ -6,7 +6,6 @@ public class BalanceServiceNotFoundException extends NotFoundResponseStatusExcep
     private static final String MSG = "The balance with ID %1$s was not found.";
 
     public BalanceServiceNotFoundException(Long balanceId) {
-        super();
-        this.setMessage(String.format(MSG, balanceId));
+        super(String.format(MSG, balanceId));
     }
 }
