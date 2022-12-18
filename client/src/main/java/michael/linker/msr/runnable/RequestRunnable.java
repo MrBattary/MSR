@@ -9,8 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Custom runnable that makes requests to the server.
+ */
 public class RequestRunnable implements Runnable {
-    private static final String JSON_OBJECT = "{\"amount\":%d}";
+    private static final String UPDATE_BALANCE_JSON_OBJECT = "{\"amount\":%d}";
     private final String url, jsonAmount;
     private final Double getRequestProbability;
     private final List<String> getRequestIdList, updateRequestIdList;
@@ -20,7 +23,7 @@ public class RequestRunnable implements Runnable {
         getRequestProbability = model.getRequestProbability();
         getRequestIdList = Collections.unmodifiableList(model.getRequestIdList());
         updateRequestIdList = Collections.unmodifiableList(model.updateRequestIdList());
-        jsonAmount = String.format(JSON_OBJECT, model.changeAmount());
+        jsonAmount = String.format(UPDATE_BALANCE_JSON_OBJECT, model.changeAmount());
     }
 
     @Override

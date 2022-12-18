@@ -9,14 +9,14 @@ public record RequestRunnableModel(String url,
                                    List<String> updateRequestIdList,
                                    Long changeAmount) {
     public RequestRunnableModel(String url,
-                                Double readQuota,
-                                Double writeQuota,
+                                Long readQuota,
+                                Long writeQuota,
                                 List<Long> readIdList,
                                 List<Long> writeIdList,
                                 Long changeAmount) {
         this(
                 url,
-                readQuota / (readQuota + writeQuota),
+                readQuota.doubleValue() / (readQuota.doubleValue() + writeQuota.doubleValue()),
                 readIdList.stream().map(Object::toString).collect(Collectors.toList()),
                 writeIdList.stream().map(Object::toString).collect(Collectors.toList()),
                 changeAmount
