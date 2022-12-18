@@ -18,6 +18,8 @@
         <version.lombok>1.18.24</version.lombok>
         <version.log4j>2.19.0</version.log4j>
         <version.okhttp3>4.10.0</version.okhttp3>
+        <version.jar>3.3.0</version.jar>
+        <version.assembly>3.3.0</version.assembly>
     </properties>
 
 
@@ -44,4 +46,41 @@
             <version>${version.okhttp3}</version>
         </dependency>
     </dependencies>
+
+    <packaging>jar</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${version.jar}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>michael.linker.msr.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${version.assembly}</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive><manifest>
+                        <mainClass>michael.linker.msr.Main</mainClass>
+                    </manifest></archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>single</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
