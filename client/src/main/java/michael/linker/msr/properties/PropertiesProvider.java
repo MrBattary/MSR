@@ -2,7 +2,10 @@ package michael.linker.msr.properties;
 
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 /**
@@ -12,6 +15,7 @@ import java.util.stream.Collectors;
 public class PropertiesProvider {
     // Keys
     private static final String PROPERTIES_FILENAME = "application.properties";
+    private static final String SERVER_ENDPOINT_KEY = "server.endpoint";
     private static final String THREAD_COUNT_KEY = "client.threadCount";
     private static final String READ_QUOTA_KEY = "client.readQuota";
     private static final String WRITE_QUOTA_KEY = "client.writeQuota";
@@ -22,6 +26,7 @@ public class PropertiesProvider {
     private static final String BALANCE_SYNCHRONIZE_START_AMOUNT_KEY = "client.balance.synchronize.startAmount";
 
     // Values
+    private final String serverEndpoint;
     private final Long threadCount, readQuota, writeQuota, balanceSyncStartAmount;
     private final List<Long> readIdList, writeIdList;
     private final Boolean readSync, writeSync;
@@ -30,10 +35,11 @@ public class PropertiesProvider {
      * Default constructor.
      *
      * @throws PropertiesNotAvailableException if .properties file was not available.
-     * @throws PropertiesNotFoundException if any required property was not found.
+     * @throws PropertiesNotFoundException     if any required property was not found.
      */
     public PropertiesProvider() throws PropertiesNotAvailableException, PropertiesNotFoundException {
         Properties properties = PropertiesLoader.loadProperties(PROPERTIES_FILENAME);
+        serverEndpoint = properties.getProperty(SERVER_ENDPOINT_KEY);
         threadCount = this.getLongProperty(properties, THREAD_COUNT_KEY);
         readQuota = this.getLongProperty(properties, READ_QUOTA_KEY);
         writeQuota = this.getLongProperty(properties, WRITE_QUOTA_KEY);
