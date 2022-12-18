@@ -21,13 +21,14 @@ public class PropertiesProvider {
     private static final String WRITE_QUOTA_KEY = "client.writeQuota";
     private static final String BALANCE_READ_ID_LIST_KEY = "client.balance.readIdList";
     private static final String BALANCE_WRITE_ID_LIST_KEY = "client.balance.writeIdList";
+    private static final String BALANCE_CHANGE_AMOUNT_KEY = "client.balance.changeAmount";
     private static final String BALANCE_SYNCHRONIZE_READ_KEY = "client.balance.synchronize.read";
     private static final String BALANCE_SYNCHRONIZE_WRITE_KEY = "client.balance.synchronize.write";
     private static final String BALANCE_SYNCHRONIZE_START_AMOUNT_KEY = "client.balance.synchronize.startAmount";
 
     // Values
     private final String serverEndpoint;
-    private final Long threadCount, readQuota, writeQuota, balanceSyncStartAmount;
+    private final Long threadCount, readQuota, writeQuota, balanceSyncStartAmount, balanceChangeAmount;
     private final List<Long> readIdList, writeIdList;
     private final Boolean readSync, writeSync;
 
@@ -43,6 +44,7 @@ public class PropertiesProvider {
         threadCount = this.getLongProperty(properties, THREAD_COUNT_KEY);
         readQuota = this.getLongProperty(properties, READ_QUOTA_KEY);
         writeQuota = this.getLongProperty(properties, WRITE_QUOTA_KEY);
+        balanceChangeAmount = this.getLongProperty(properties, BALANCE_CHANGE_AMOUNT_KEY);
         balanceSyncStartAmount = this.getLongProperty(properties, BALANCE_SYNCHRONIZE_START_AMOUNT_KEY);
         readIdList = this.getLongListProperty(properties, BALANCE_READ_ID_LIST_KEY);
         writeIdList = this.getLongListProperty(properties, BALANCE_WRITE_ID_LIST_KEY);
