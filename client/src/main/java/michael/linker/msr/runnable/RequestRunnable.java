@@ -3,6 +3,7 @@ package michael.linker.msr.runnable;
 import michael.linker.msr.http.HttpGate;
 import michael.linker.msr.http.exceptions.HttpGateFailureException;
 import michael.linker.msr.http.exceptions.HttpRequestFailedException;
+import michael.linker.msr.provider.JsonProvider;
 import michael.linker.msr.runnable.model.RequestRunnableModel;
 
 import java.util.Collections;
@@ -13,7 +14,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * Custom runnable that makes requests to the server.
  */
 public class RequestRunnable implements Runnable {
-    private static final String UPDATE_BALANCE_JSON_OBJECT = "{\"amount\":%d}";
     private final String url, jsonAmount;
     private final Double getRequestProbability;
     private final List<String> getRequestIdList, updateRequestIdList;
@@ -23,7 +23,7 @@ public class RequestRunnable implements Runnable {
         getRequestProbability = model.getRequestProbability();
         getRequestIdList = Collections.unmodifiableList(model.getRequestIdList());
         updateRequestIdList = Collections.unmodifiableList(model.updateRequestIdList());
-        jsonAmount = String.format(UPDATE_BALANCE_JSON_OBJECT, model.changeAmount());
+        jsonAmount = JsonProvider.buildUpdateBalanceJson(model.changeAmount());
     }
 
     @Override

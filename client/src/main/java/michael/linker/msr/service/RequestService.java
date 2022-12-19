@@ -6,17 +6,25 @@ import michael.linker.msr.http.exceptions.HttpRequestFailedException;
 import michael.linker.msr.properties.PropertiesNotAvailableException;
 import michael.linker.msr.properties.PropertiesNotFoundException;
 import michael.linker.msr.properties.PropertiesProvider;
+import michael.linker.msr.provider.JsonProvider;
+import michael.linker.msr.provider.MsgProvider;
 import michael.linker.msr.runnable.RequestRunnable;
 import michael.linker.msr.runnable.model.RequestRunnableModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.RejectedExecutionException;
 
 public class RequestService implements IRequestService {
-    private static final String CREATE_BALANCE_JSON_OBJECT = "{\"id\":%d,\"amount\":%d}";
+    private static final Logger log = LogManager.getLogger(RequestService.class);
     private final HttpGate httpGate;
     private final PropertiesProvider properties;
     private final ExecutorService executorService;
@@ -44,6 +52,7 @@ public class RequestService implements IRequestService {
         try {
             List<Future<?>> futureList = new ArrayList<>();
             for (int i = 0; i < properties.getThreadCount(); i++) {
+                log.info(MsgProvider.buildThreadStartMessage(i));
                 RequestRunnable requestRunnable = new RequestRunnable(new RequestRunnableModel(
                         properties.getServerEndpoint(),
                         properties.getReadQuota(),
@@ -54,6 +63,7 @@ public class RequestService implements IRequestService {
                 ));
                 futureList.add(executorService.submit(requestRunnable));
             }
+            log.info(MsgProvider.HOW_TO_SHUTDOWN_MESSAGE);
             // foreach blocks current thread until all child threads are finished.
             for (Future<?> future : futureList) {
                 future.get();
@@ -86,10 +96,14 @@ public class RequestService implements IRequestService {
 
     private void repopulateServer(List<Long> idList) throws RequestServiceFailedException {
         try {
-            httpGate.delete(properties.getServerEndpoint()).close();
-            for (Long id : idList) {
-                httpGate.put(properties.getServerEndpoint(),
-                        String.format(CREATE_BALANCE_JSON_OBJECT, id, properties.getBalanceSyncStartAmount())).close();
+            if (idList.size() > 0) {
+                log.info(MsgProvider.REPOPULATE_MSG);
+                httpGate.delete(properties.getServerEndpoint()).close();
+                for (Long id : idList) {
+                    httpGate.put(properties.getServerEndpoint(),
+                                    JsonProvider.buildCreateBalanceJson(id, properties.getBalanceSyncStartAmount()))
+                            .close();
+                }
             }
         } catch (HttpGateFailureException | HttpRequestFailedException e) {
             throw new RequestServiceFailedException(e);
