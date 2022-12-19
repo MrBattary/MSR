@@ -28,7 +28,7 @@ public interface IBalanceWebService {
      * @return a model containing data about the amount on the balance.
      * @throws BalanceServiceNotFoundException if balance with provided ID was not found.
      */
-    GetBalanceResponse getBalance(Long balanceId) throws BalanceServiceAlreadyExistsException;
+    GetBalanceResponse getBalance(Long balanceId) throws BalanceServiceNotFoundException;
 
     /**
      * Update specified balance according to the specified request model.
@@ -37,7 +37,7 @@ public interface IBalanceWebService {
      * @param request   new balance model.
      * @throws BalanceServiceNotFoundException if balance with provided ID was not found.
      */
-    void updateBalance(Long balanceId, BalanceUpdateModel request) throws BalanceServiceAlreadyExistsException;
+    void updateBalance(Long balanceId, BalanceUpdateModel request) throws BalanceServiceNotFoundException;
 
     /**
      * Remove all balances.
