@@ -20,7 +20,6 @@ public class BalanceCoreService implements IBalanceCoreService {
     }
 
     @Override
-    @CachePut(value = CACHE_KEY, key = "#model.id.longValue()")
     public void createBalance(BalanceModel model) throws BalanceCoreServiceFailedException {
         if (repository.countById(model.id()) == 0L) {
             repository.saveAndFlush(new BalanceEntity(model));

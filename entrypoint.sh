@@ -21,8 +21,23 @@ _build_server() {
 	cd ..
 }
 
+_build_client() {
+	cd client
+	./mvnw clean package
+	cd ..
+}
+
 _run_server() {
 	gnome-terminal --tab -- /bin/sh -c 'cd server/target; java -jar server-0.0.1-SNAPSHOT.jar;'
+}
+
+_run_client() {
+	gnome-terminal --tab -- /bin/sh -c 'cd client/target; java -jar client-1.0-SNAPSHOT-jar-with-dependencies.jar;'
+}
+
+_run_client_delayed() {
+	sleep 5s
+	gnome-terminal --tab -- /bin/sh -c 'cd client/target; java -jar client-1.0-SNAPSHOT-jar-with-dependencies.jar;'
 }
 
 case $1 in
@@ -30,5 +45,8 @@ case $1 in
     remove-db) _remove_db;;
 	build-server) _build_server;;
 	run-server) _run_server;;
+	build-client) _build_client;;
+	run-client) _run_client;;
+	run-client-delayed) _run_client_delayed;;
     *) exec "$@";;
 esac

@@ -1,6 +1,11 @@
 #Defailt application port
 server:
   port: 8080
+  # Tomcat multithreading configuration
+  tomcat:
+    accept-count: 200
+    threads:
+      max: 200
 
 # Spring settings
 spring:

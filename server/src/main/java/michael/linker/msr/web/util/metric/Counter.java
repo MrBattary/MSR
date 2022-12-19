@@ -1,4 +1,4 @@
-package michael.linker.msr.web.metric;
+package michael.linker.msr.web.util.metric;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

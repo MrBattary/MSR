@@ -5,7 +5,7 @@ import michael.linker.msr.web.exception.BadRequestResponseStatusException;
 /**
  * Custom wrapper for the String to Long values parsing.
  */
-public class LongParser {
+public class HttpLongParser {
 
     /**
      * Parse String to Long.
