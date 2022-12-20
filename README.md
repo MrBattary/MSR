@@ -25,6 +25,11 @@ All the necessary commands are wrapped in a **Makefile** for convenience.
 #### How to run
 
 Deploys DB, builds server, builds client, starts server, makes a short delay (5 seconds), starts client.
+The delay before starting the client is necessary because the client starts faster than the server.
+
+*__In order to shut down all threads correctly, the client checks whether the server is available. 
+If the server is not available, then the client terminates all threads and shuts down its work.__*
+
 Deploying a database may cause *could not change directory to "/.../MSR": Permission denied* , but do not worry, the
 creation is correct.
 
@@ -35,11 +40,27 @@ make build start
 
 **OR**
 
+Start server
+
+```shell
+sudo make create_db
+make start_server
+```
+
+Wait until the server is fully started, then:
+
+```shell
+make start_client
+```
+
+**OR**
+
 Automatic deployment and launch. `sudo make`
 
 #### After run
 
 To remove the DB used by this application run: `sudo make remove_db`.
+
 Deleting a database may cause *could not change directory to "/.../MSR": Permission denied* , but do not worry, the
 deletion is correct.
 
