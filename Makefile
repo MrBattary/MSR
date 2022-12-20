@@ -1,7 +1,7 @@
 SUDO=$(grep -q $$USER || echo sudo)
 
 .PHONY: default
-default: build start
+default: create_db start
 
 .PHONY: start
 start: start_server start_client_delayed
