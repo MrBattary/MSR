@@ -1,0 +1,60 @@
+#Defailt application port
+server:
+  port: 8080
+  # Tomcat multithreading configuration
+  tomcat:
+    accept-count: 200
+    threads:
+      max: 200
+
+# Spring settings
+spring:
+  # PostgreSQL
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/linkermsrdb'
+    username: 'linkermsru'
+    password: 'linkermsr'
+  # JPA
+  jpa:
+    open-in-view: false
+  # Logger
+  profiles:
+    active: 'development'
+  # Caching
+  cache:
+    couchbase:
+      expiration: 60000
+
+# Logger config
+logging:
+  file:
+    path: 'logs'
+
+# Custom controller properties
+controller:
+  # Main controller advice properties
+  advice:
+    response:
+      provideMessage: true
+      message:
+        placeholder: ""
+        default: "Internal server error."
+  # Balance controller properties
+  balance:
+    path: "/balance"
+
+# Custom filter properties
+filter:
+  # Counter filter properties
+  counter:
+    pattern: ${controller.balance.path}, ${controller.balance.path}/
+    period:
+      min: 0
+      sec: 5
+      # Calculated value, do NOT set const value
+      calculatedMs: '#{${filter.counter.period.min} * 60000 + ${filter.counter.period.sec} * 1000}'
+    format:
+      value: "Balance requests: %1$s, Balance updates: %2$s, Total: %3$s"
+      time: "%1$s min %2$s sec."
+      # 1 - value, 2 - time
+      concat: "%1$s per %2$s"
