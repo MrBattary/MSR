@@ -51,17 +51,17 @@ public class RequestService implements IRequestService {
     public void prepareAndRun() throws RequestServiceFailedException {
         try {
             List<Future<?>> futureList = new ArrayList<>();
+            final RequestRunnableModel runnableModel = new RequestRunnableModel(
+                    properties.getServerEndpoint(),
+                    properties.getReadQuota(),
+                    properties.getWriteQuota(),
+                    properties.getReadIdList(),
+                    properties.getWriteIdList(),
+                    properties.getBalanceChangeAmount()
+            );
             for (int i = 0; i < properties.getThreadCount(); i++) {
                 log.info(MsgProvider.buildThreadStartMessage(i));
-                RequestRunnable requestRunnable = new RequestRunnable(new RequestRunnableModel(
-                        properties.getServerEndpoint(),
-                        properties.getReadQuota(),
-                        properties.getWriteQuota(),
-                        properties.getReadIdList(),
-                        properties.getWriteIdList(),
-                        properties.getBalanceChangeAmount()
-                ));
-                futureList.add(executorService.submit(requestRunnable));
+                futureList.add(executorService.submit(new RequestRunnable(runnableModel)));
             }
             log.info(MsgProvider.HOW_TO_SHUTDOWN_MESSAGE);
             // foreach blocks current thread until all child threads are finished.
